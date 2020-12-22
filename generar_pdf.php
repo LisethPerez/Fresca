@@ -12,12 +12,12 @@ $consultTama = "SELECT COUNT(*) cantidad FROM detalle_factura WHERE factura_id_f
 $sqlTama = mysqli_query($conn,$consultTama) or die(mysqli_error($conn));
 $resulTama = $sqlTama->fetch_assoc();
 $tama = $resulTama['cantidad'];
-$nuevo = $tama*7;
+$nuevo = $tama*5;
     
 
 //echo $idFac;
 // Tamaño tickt 80mm x 150 mm (largo aprox)
-$x=80;
+$x=95;
 $pdf = new FPDF($orientation='P',$unit='mm', array(80,$x+$nuevo));
 $pdf->AddPage();
 $pdf->SetFont('Helvetica','',11);
