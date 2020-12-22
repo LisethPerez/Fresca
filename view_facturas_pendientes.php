@@ -56,6 +56,7 @@
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
 
+            
         <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
@@ -71,9 +72,10 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>FACTURACIÓN</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class=""></i><a href="view_ventas.php">Realizadas</a></li>
-                            <li><i class=""></i><a href="view_facturas.php">Anuladas</a></li>
+                        <li><i class=""></i><a href="view_ventas.php">Realizadas</a></li>
+                            <!--<li><i class=""></i><a href="view_facturas.php">Anuladas</a></li>-->
                             <li><i class=""></i><a href="view_facturas_pendientes.php">Pendientes</a></li>
+                           <!-- <li><i class=""></i><a href="view_facturas_web.php">Web</a></li>-->
                         </ul>
                     </li>
                     
@@ -95,12 +97,35 @@
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
-        <header id="header" class="header" style="background:#F0A744">
-            <div class="top-left">
+        <header id="header" class="header">
+           <!-- <div class="top-left">
                 <div class="navbar-header" style="background:#F0A744">
                     <a class="navbar-brand" style="background:#F0A744" href="./"><img src="images/logoo1.png" alt="Logo"></a>
                  
                     <a id="menuToggle" class="menutoggle" style="background:#F0A744;"><i class="fa fa-bars" style=" color:#FFF"></i></a>
+                    
+                </div>
+            </div>-->
+            <div class="top-left">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="./"><img src="images/logoCo1.png" alt="Logo"><img src="images/texto.png" alt="Logo"></a>
+                 
+                    <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+                    
+                </div>
+            </div>
+            <div class="top-right">
+                <div class="header-menu">
+                    <div class="header-left">
+                   
+                    <br>
+                        <label>Bienvenido: <?php echo $_SESSION['nombreEmple']?></label>
+                    </div>
+                    <div class="user-area dropdown float-right">
+                    <a href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                            <img class="" src="images/controler2.jpg" style="width: 110px; height: 50px;">
+                        </a>
+                    </div>
                 </div>
             </div>
             
@@ -138,7 +163,7 @@
                     <div class="col-lg-12">
                         <div class="card border border-secondary">
                             <div class="card-header bg-light">
-                                <strong class="card-title text-dark">Información Facturas Pendientes de Pago</strong>
+                                <strong class="card-title text-dark">Información Facturas de Domiciliarios Pendientes</strong>
                             </div>
                             <div class="card-body">
                                 <div class="form-row">
@@ -164,18 +189,21 @@
                                     </div>
                                 </div>  <br>
                                 
-                                    <div class=""> 
-                                    <table class="table table-responsive table-wrapper-scroll-y my-custom-scrollbar" id="">
+                                    <div class="form-row table-wrapper-scroll-y my-custom-scrollbar"> 
+                                    <table class="table table-responsive" id="taaable">
                                             <thead class="thead-dark">
                                                 <tr>    
                                                     <th>ID</th>
                                                     <th>Total</th>
-                                                    <th>#Productos</th>
+                                                    <th>#</th>
                                                     <th>Fecha</th>
                                                     <th>Tipo_pago</th>
-                                                    <th>Empleado</th>
+                                                    <th>Cajero</th>
+                                                    <th>Domiciliario</th>
                                                     <th>Cliente</th>
                                                     <th>Sede</th>
+                                                    <th style="display:none">Paga</th>
+                                                    <th style="display:none">Ref</th>
                                                     <th>Opciones</th>
                                                 </tr>
                                             </thead>
@@ -193,7 +221,39 @@
                     
                     </div><!-- /# column -->
                 </div>
-                <div class="modal fade" id="productos2" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal fade" id="ModificacionEstado" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"><strong>Modificación de estado</strong></h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="card border border-secondary">
+                                                            <div class="card-header bg-dark">
+                                                                <strong class="card-title text-light">Información</strong>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div id="cambiosFact">
+                                                                </div>
+                                                                <div id="cambios">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                            <button type="button" id="modificar" class="btn btn-success btn-sm mb-2">MODIFICAR</button>
+                                                           
+                                                        </div>
+                                                    
+                                                </div><!--modal-content-->
+                                            </div><!--modal-dialog-->
+                                        </div> <!--modal-fade-->
+                                        <div class="modal fade" id="productos2" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true" data-backdrop="static">
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -222,8 +282,8 @@
                                         </table>
                                                     </div>
                                                     <div class="modal-footer">
-                                                            <button type="button" id="" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
-                                                           
+                                                            <button type="button" class="btn btn-danger btn-sm mb-2" data-dismiss="modal">ATRÁS</button>
+                                                            
                                                         </div>
                                                     
                                                 </div><!--modal-content-->

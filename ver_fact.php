@@ -20,12 +20,12 @@
             <td><?php echo $row['nombre_sede'];?></td>
             <td> 
                 <button class="btn btn-white btn-sm view_products" style="background:#F0A744; color:#FFF" id="detalles" data-toggle="modal" data-target="#productos">
-                <i class="fa fa-wrench" aria-hidden="true"></i></button>
+                <i class="fa fa-list" aria-hidden="true"></i></button>
                 <button class="btn btn-success btn-sm impri" id="imprimir"> <i class="fa fa-print" aria-hidden="true"></i></button>
             </td>
         </tr>
-        <form id="numberFact" method="POST" action="generar_pdf.php">  
-            <input type="hidden" value="4" id="gg" name="var">
+        <form id="numberFact" method="POST" action="generar_pdf2.php">  
+            <input type="hidden" value="" id="id_Factu" name="var">
             <button type="submit" style="display:none;" id="submitButton">
         </form>
         
@@ -34,25 +34,16 @@
 ?>
                                                 
 <script>
+var idFac;
 $('.impri').click(function(){
-    /*$tr=$(this).closest('tr');
+    $tr=$(this).closest('tr');
         var datos = $tr.children("td").map(function (){
             return $(this).text();
         });
-    idFac = datos[0];*/
-    alert("okey");
+    idFac = datos[0];
+    $('#id_Factu').val(idFac);
     document.getElementById("submitButton").click();
     
-    //var prueba = document.getElementById('submitButton').value();
-    //window.open("generar_pdf.php");
-    /*$.ajax({
-        url:"generar_pdf.php?var=4",
-        method: "GET",
-        success: function(data){
-            //alert(data);
-            window.open("generar_pdf.php");
-        }
-    });*/
 });
 
 </script>

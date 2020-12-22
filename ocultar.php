@@ -11,10 +11,10 @@ if($numFilas = $sql->num_rows>0){
 
     $result = $sql->fetch_object();
     $unidad = $result->unidad_de_medida;
-    //$image = imagecreatefromjpeg($result->imagen);
+    //echo $unidad;
     if($unidad=="KILO"){
         echo "peso";
-    }if($unidad=="UNIDAD"){
+    }else{
         echo "cantidad";
     }
 

@@ -61,7 +61,7 @@ display: block;
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active">
+                <li class="active">
                         <a href="index.php"><i class="menu-icon fa fa-laptop active"></i>FRESCA</a>
                     </li>
                     <li class="menu-title">Administración</li><!-- /.menu-title -->
@@ -75,8 +75,9 @@ display: block;
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>FACTURACIÓN</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class=""></i><a href="view_ventas.php">Realizadas</a></li>
-                            <li><i class=""></i><a href="view_facturas.php">Anuladas</a></li>
+                            <!--<li><i class=""></i><a href="view_facturas.php">Anuladas</a></li>-->
                             <li><i class=""></i><a href="view_facturas_pendientes.php">Pendientes</a></li>
+                           <!-- <li><i class=""></i><a href="view_facturas_web.php">Web</a></li>-->
                         </ul>
                     </li>
                     
@@ -98,12 +99,35 @@ display: block;
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
-        <header id="header" class="header" style="background:#F0A744">
-            <div class="top-left">
+        <header id="header" class="header">
+           <!-- <div class="top-left">
                 <div class="navbar-header" style="background:#F0A744">
                     <a class="navbar-brand" style="background:#F0A744" href="./"><img src="images/logoo1.png" alt="Logo"></a>
                  
                     <a id="menuToggle" class="menutoggle" style="background:#F0A744;"><i class="fa fa-bars" style=" color:#FFF"></i></a>
+                    
+                </div>
+            </div>-->
+            <div class="top-left">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="./"><img src="images/logoCo1.png" alt="Logo"><img src="images/texto.png" alt="Logo"></a>
+                 
+                    <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+                    
+                </div>
+            </div>
+            <div class="top-right">
+                <div class="header-menu">
+                    <div class="header-left">
+                   
+                    <br>
+                        <label>Bienvenido: <?php echo $_SESSION['nombreEmple']?></label>
+                    </div>
+                    <div class="user-area dropdown float-right">
+                    <a href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                            <img class="" src="images/controler2.jpg" style="width: 110px; height: 50px;">
+                        </a>
+                    </div>
                 </div>
             </div>
             
@@ -408,7 +432,7 @@ display: block;
                                                                         <button type="button" class="btn btn-primary btn-sm mb-2 groupTipo" value="Presencial">Presencial</button>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <button type="button" class="btn btn-primary btn-sm mb-2 groupTipo" data-toggle="modal" data-target="#infoDomiciliario" value="Domicilios" disabled>Domicilios</button>
+                                                                        <button type="button" class="btn btn-primary btn-sm mb-2 groupTipo" data-toggle="modal" data-target="#infoDomiciliario" value="Domicilios">Domicilios</button>
                                                                     </div>
                                                                 </div><hr>
                                                                     <div class="form-row pago">

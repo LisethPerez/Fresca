@@ -234,20 +234,67 @@ $('.view_products').click(function () {
         return $(this).text();
     });
     id_factu = datos[0];
-    alert(datos[0]);
+   
     $.ajax({
         url: "detalle_productos.php?var="+id_factu,
         type: "POST",
         success: function(data){
-            //alert(JSON.parse(data));
+            //alert(data);
+           // alert(JSON.parse(data));
             var produ = document.getElementById("cont_productos");
             produ.innerHTML = "";
             var datosPro = JSON.parse(data);
-            createRow2(datosPro);       
+            createRow2(datosPro);   
         }
     });    
  });
 
+ $('#modificar').click(function(){
+    var paga = $('#pagaa option:selected').val();
+    var tipo = $('#tipoo option:selected').val();
+    var tipo2 = $('#tipoo option:selected').text();
+   
+
+    if(tipo2==="Efectivo"){
+        refe = 0;
+    }else{
+        var refe = $('#ref').val();
+    }
+
+    $.ajax({
+        url: "modificar_factura.php",
+        type: "POST",
+        data:{var: paga, var2: tipo, var3: refe, var4: id_},
+        success: function(data){
+         
+           if(data==="Modificación de estado de la factura correcta"){
+            Swal.fire({
+                icon: 'success',
+                text: 'Datos erroneos',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });  
+            window.location.href="view_facturas_pendientes.php"; 
+           }else{
+            Swal.fire({
+                icon: 'error',
+                text: 'Ha ocurrido un error',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }); 
+           }
+        }
+    });
+
+});
 
 
  function createRow2(data) {                              //dynamically adding rows to the Table
@@ -429,92 +476,101 @@ var referencia;
  $('.groupPago').click(function () {
     pago = $(this).val();
 
-    if(pago === "Efectivo"){
-        $('#efectivo').show();
-        $('#credito').hide();
-        $('#debito').hide();
+    if(tipo_domi === "Presencial"){
+        if(pago === "Efectivo"){
+            $('#efectivo').show();
+            $('#credito').hide();
+            $('#debito').hide();
+    
+        }
+        if(pago === "Tarjeta debito"){
+            $('#efectivo').hide();
+            $('#credito').hide();
+            $('#links').hide();
+    
+            Swal.fire({
+                title: '¿Se aprobó la transacción?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: ' #25A01B',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡OK!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#debito').show();
+                    const value = $('#total').val();
+                    var chain = String(value.replace(/\D/g, ""));
+                    const newValue = new Intl.NumberFormat('en-US').format(chain);
+                    $('#total_venDe').val("$ " + newValue);
+    
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                  ) {
+                    $('#debito').hide();
+                  }
+              })
+        }
+        if(pago === "Tarjeta credito"){
+            $('#efectivo').hide();
+            $('#debito').hide();
+            $('#links').hide();
+            Swal.fire({
+                title: '¿Se realizó la transacción?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: ' #25A01B',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡OK!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#credito').show();
+                    const value = $('#total').val();
+                    var chain = String(value.replace(/\D/g, ""));
+                    const newValue = new Intl.NumberFormat('en-US').format(chain);
+                    $('#total_venCre').val("$ " + newValue);
+     
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                  ) {
+                    $('#credito').hide();   
+                  }
+              })    
+        }
+        if(pago === "Link de pago"){
+            $('#efectivo').hide();
+            $('#debito').hide();
+            $('#credito').hide();
+            Swal.fire({
+                title: '¿Se realizó la transacción?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: ' #25A01B',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡OK!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#credito').show();
+                    const value = $('#total').val();
+                    var chain = String(value.replace(/\D/g, ""));
+                    const newValue = new Intl.NumberFormat('en-US').format(chain);
+                    $('#total_venCre').val("$ " + newValue);
+     
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                  ) {
+                    $('#links').hide();   
+                  }
+              })    
+        }
 
-    }
-    if(pago === "Tarjeta debito"){
+    }else if(tipo_domi === "Domicilios"){
         $('#efectivo').hide();
         $('#credito').hide();
+        $('#debito').hide();
         $('#links').hide();
 
-        Swal.fire({
-            title: '¿Se aprobó la transacción?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: ' #25A01B',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '¡OK!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                $('#debito').show();
-                const value = $('#total').val();
-                var chain = String(value.replace(/\D/g, ""));
-                const newValue = new Intl.NumberFormat('en-US').format(chain);
-                $('#total_venDe').val("$ " + newValue);
-
-            } else if (
-                result.dismiss === Swal.DismissReason.cancel
-              ) {
-                $('#debito').hide();
-              }
-          })
-    }
-    if(pago === "Tarjeta credito"){
-        $('#efectivo').hide();
-        $('#debito').hide();
-        $('#links').hide();
-        Swal.fire({
-            title: '¿Se realizó la transacción?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: ' #25A01B',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '¡OK!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                $('#credito').show();
-                const value = $('#total').val();
-                var chain = String(value.replace(/\D/g, ""));
-                const newValue = new Intl.NumberFormat('en-US').format(chain);
-                $('#total_venCre').val("$ " + newValue);
- 
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-              ) {
-                $('#credito').hide();   
-              }
-          })    
-    }
-    if(pago === "Link de pago"){
-        $('#efectivo').hide();
-        $('#debito').hide();
-        $('#credito').hide();
-        Swal.fire({
-            title: '¿Se realizó la transacción?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: ' #25A01B',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '¡OK!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                $('#credito').show();
-                const value = $('#total').val();
-                var chain = String(value.replace(/\D/g, ""));
-                const newValue = new Intl.NumberFormat('en-US').format(chain);
-                $('#total_venCre').val("$ " + newValue);
- 
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-              ) {
-                $('#links').hide();   
-              }
-          })    
     }
  });
 
@@ -593,18 +649,22 @@ $(document).ready(function(){
                     $('#productos').html(data);        
                 }
             });
-
+            /*$("#cantidad").prop('disabled', false);
+            $("#pesooo").prop('disabled', false);*/
             $.ajax({
+                
                 url:"ocultar.php?var="+nombre_producto,
                 method:"POST",    
                 success:function(data){ 
                      tipo = data;   
-                     //alert(tipo);
+                 
                      if(tipo==="cantidad"){
                         $('#cantidad').focus();
+                        $("#pesooo").val('');
                     }
                     if(tipo==="peso"){
                         $('#pesooo').focus();
+                        $("#cantidad").val('');
                         
                     }        
                 }
@@ -645,6 +705,36 @@ $(document).ready(function(){
         }
     });
 
+
+});
+
+$('.editarDomi').click(function(){
+    $tr=$(this).closest('tr');
+    var datos = $tr.children("td").map(function (){
+        return $(this).text();
+    });
+    id_= datos[0];
+    var total = datos[1];
+    tipo_ = datos[4];
+    var sipaga = datos[9];
+    referencia_pago = datos[10];
+
+    var chain = String(total.replace(/\D/g, ""));
+    const newValue = new Intl.NumberFormat('en-US').format(chain);
+    total = "$ " + newValue;
+
+    $.ajax({
+        url: "detalle_factura.php",
+        type: "POST",
+        data:{var: id_, var2: sipaga, var3: referencia_pago, var4: tipo_, var5: total},
+        success: function(data){
+            var contenido = document.getElementById("cambiosFact");
+            contenido.innerHTML = "";
+            $('#cambiosFact').html(data);
+            
+         //alert(data);           
+        }
+    });
 
 });
 
@@ -696,13 +786,16 @@ $('#total_venDe').keypress(function (evt) {
 
 //Capturar el peso de forma actomática cuando se situe el cursos dentro del input
 $("#pesooo").focus(function(e) {
+
+    /*$('#pesooo').val(1);
+    $('#peso').val(1);}*/
     $.ajax({
         url: "lectura.php",
         success: function(data) {
             $('#pesooo').val(data);
             $('#peso').val(data);
         }
-    }); 
+    });
 });   
 
 
@@ -776,6 +869,7 @@ $('.selec').keypress(function (e) {
                     url: "ingresar_tabla.php?var="+tipo_cliente+"&var2="+cont,
                     data: $("#venta").serialize(),
                     success: function(data) {
+                        //alert(data);
                         DataArray = JSON.parse(data);  
                                         createRow(DataArray);
                                         deleteRow(datos);  
@@ -961,12 +1055,22 @@ $('#pagar').click(function(){
             id_factura = data;
             $('#ggg').val(data);
             var cost = parseInt($('#valor_ingre').val().replace(/[^a-zA-Z0-9]/g, ''));
-            $('#g2').val(cost);
+            var total = parseInt($('#total').val().replace(/[^a-zA-Z0-9]/g, ''));
+
+            if(tipo_domi ==="Presencial"){
+                if(pago==="Efectivo"){
+                    $('#g2').val(cost);
+                }else{
+                    $('#g2').val(total);
+                }
+            }else{
+                $('#g2').val(total);
+            }
                 $.ajax({
                 type:"POST",
                 url: "agregar_factura.php",
                 //data:{tipo_pago: pago, id:  id_factura, refe: referencia, var2: tipo_domi, var3: emple},
-                data:{tipo_pago: pago, id:  id_factura, refe: referencia},
+                data:{tipo_pago: pago, id:  id_factura, refe: referencia, var2: tipo_domi, var3: emple},
                 success: function(data) {
                     if(data==="No se hicieron cambios" || data==="No hay detalle de venta"){
                         Swal.fire({
@@ -981,7 +1085,7 @@ $('#pagar').click(function(){
                         });     
                     }else{
                         document.getElementById("submitButton1").click();
-                        var myVar = setInterval(myTimer, 5000);
+                        var myVar = setInterval(myTimer, 2000);
                     }
                 }
             });
