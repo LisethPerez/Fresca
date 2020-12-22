@@ -855,6 +855,15 @@ $('.selec').keypress(function (e) {
                     }
                 });     
             }else{ 
+                if(tipo==="cantidad"){
+                    $('#peso').val('');
+                    $('#pesooo').val('');
+                    $('#cantidad').focus();
+                }else{
+                    $('#cantidad').val('');
+                    $('#pesooo').focus();
+                }
+                
                 if(peso === ''){
                     cant = cantidad;
                 }

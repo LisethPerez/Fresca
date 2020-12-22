@@ -123,13 +123,13 @@ $vueltas=$valorIngre-$total;
 $pdf->Cell(65,0,'','T');
 $pdf->Ln(2);   
 $pdf->SetFont('Arial','B', 6.5);
-$pdf->Cell(25,2,'TOTAL A PAGAR: ',0,0,'R');
-$pdf->Cell(25,2,"$ ".number_format($total),0,1,'L',0);
+$pdf->Cell(25,3,'TOTAL A PAGAR: ',0,0,'R');
+$pdf->Cell(25,3,"$ ".number_format($total),0,1,'L',0);
 $pdf->SetFont('Arial','I', 6.5);
-$pdf->Cell(25,2,'RECIBIDO: ',0,0,'R');
-$pdf->Cell(25,2,"$ ".number_format($valorIngre),0,1,'L',0);
-$pdf->Cell(25,2,'CAMBIO: ',0,0,'R');
-$pdf->Cell(25,2,"$ ".number_format($vueltas),0,1,'L',0);
+$pdf->Cell(25,3,'RECIBIDO: ',0,0,'R');
+$pdf->Cell(25,3,"$ ".number_format($valorIngre),0,1,'L',0);
+$pdf->Cell(25,3,'CAMBIO: ',0,0,'R');
+$pdf->Cell(25,3,"$ ".number_format($vueltas),0,1,'L',0);
 }
 
 header('Content-type: application/pdf');
