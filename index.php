@@ -177,6 +177,7 @@ display: block;
                                         <form id="venta" method="POST">   
                                             <div class="form-row">
                                                 <div class="col">
+                                        
                                                     <label for="staticEmail2">Buscar producto</label>
                                                     <input autocomplete="off"  type="text" class="form-control active selec" id="producto" name="producto" placeholder="Número o nombre" style="width:400px; height:35px; font-size:110%;" data-minChars="1">
                                                     

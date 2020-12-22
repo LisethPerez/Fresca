@@ -12,23 +12,23 @@ $consultTama = "SELECT COUNT(*) cantidad FROM detalle_factura WHERE factura_id_f
 $sqlTama = mysqli_query($conn,$consultTama) or die(mysqli_error($conn));
 $resulTama = $sqlTama->fetch_assoc();
 $tama = $resulTama['cantidad'];
-$nuevo = $tama*20;
+$nuevo = $tama*7;
     
 
 //echo $idFac;
 // Tamaño tickt 80mm x 150 mm (largo aprox)
-$x=100;
+$x=80;
 $pdf = new FPDF($orientation='P',$unit='mm', array(80,$x+$nuevo));
 $pdf->AddPage();
 $pdf->SetFont('Helvetica','',11);
 $pdf->Cell(60,4,'INVERSIONES AGROINDUSTRIALES',0,1,'C');
 $pdf->Cell(60,4,'COSECHA FRESCA SAS',0,1,'C');
 $pdf->SetFont('Helvetica','',8);
-$pdf->Cell(60,4,'NIT 901 274 543-1',0,1,'C');
-$pdf->Cell(60,4,'CALLE 109 # 18-8 58',0,1,'C');
+$pdf->Cell(60,4,'NIT 901.274.543-1',0,1,'C');
+$pdf->Cell(60,4,'CRA 5 # 71-45 LOCAL 103',0,1,'C');
 $pdf->Ln(2);
 $pdf->Cell(60,4,'RES N. 18764000999047 FECHA:2020/07/18',0,1,'C');
-$pdf->Cell(60,4,'DEL N. P20001 AL N. P50000',0,1,'C');
+$pdf->Cell(60,4,'DEL N. P00001 AL N. P50000',0,1,'C');
 
 $consulEmple = "SELECT * FROM empleado WHERE user_id_user={$id_usuario}";
 $sqlEmple = mysqli_query($conn,$consulEmple) or die(mysqli_error($conn));
@@ -58,26 +58,28 @@ $resulCliente = $sqlCliente->fetch_object();
 $nombreCliente = $resulCliente->nombre;
 $str1 = utf8_decode($nombreCliente);
 
+
 $pdf->Ln(5);
 $pdf->Cell(30,4,'FECHA: ',0,0);
-$pdf->Cell(30,4,$fechaFac,0,1,'L',0);
+$pdf->Cell(5,4,$fechaFac,0,1,'L',0);
 $pdf->Cell(30,4,'FACTURA DE VENTA: ',0,0);
-$pdf->Cell(30,4,$idFac,0,1,'L',0);
+$pdf->Cell(5,4,$idFac,0,1,'L',0);
 $pdf->Cell(30,4,'NIT:',0,0);
-$pdf->Cell(30,4,'123456779',0,1,'L',0);
+$pdf->Cell(5,4,'123456779',0,1,'L',0);
 $pdf->Cell(30,4,'CLIENTE:',0,0);
-$pdf->Cell(30,4,$str1,0,1,'L',0);
+$pdf->Cell(5,4,$str1,0,1,'L',0);
 $pdf->Cell(30,4,'CAJERO:',0,0);
-$pdf->Cell(30,4,$str,0,1,'L',0);
+$pdf->Cell(5,4,$str,0,1,'L',0);
 
-$pdf->SetFont('Arial','I', 7);
-$pdf->Cell(30, 10, 'Detalle', 0);
-$pdf->Cell(5, 10, 'Cantidad',0,0,'R');
-$pdf->Cell(10, 10, 'Valor',0,0,'R');
-$pdf->Cell(15, 10, 'Iva',0,0,'R');
+$pdf->SetFont('Arial','B', 6.5);
+$pdf->Cell(45, 10, 'DETALLE',0,0,'C');
+$pdf->Cell(9, 10, 'CANT.',0,0,'C');
+$pdf->Cell(8, 10, 'VALOR',0,0,'C');
+$pdf->Cell(3, 10, 'IVA',0,0,'L');
 $pdf->Ln(8);
-$pdf->Cell(60,0,'','T');
+$pdf->Cell(65,0,'','T');
 $pdf->Ln(0);
+
 
 
 $consult = "SELECT * FROM detalle_factura WHERE factura_id_factura={$idFac}";
@@ -108,25 +110,26 @@ require 'conexionGene.php';
         $resulProducto = $sqlProducto->fetch_assoc();
         $nombreProducto = $resulProducto['nombre'];
 
-
-        $pdf->Cell(30, 10,$nombreProducto,0,0,'L',0);
-        $pdf->Cell(5, 10,$row['cantidad'],0,0,'L',0);
-        $pdf->Cell(10, 10,$row['total'],0,0,'C',0);
-        $pdf->Cell(15, 10,$nombreImpuesto,0,1,'C',0);
-        //$x = $x + 2;
-
+        $pdf->SetFont('Arial','I', 5);
+        $pdf->Cell(50, 3,$nombreProducto,0,0,'L',0);
+        $pdf->Cell(3, 3,$row['cantidad'],0,0,'L',0);
+        $pdf->Cell(9, 3,"$ ".number_format($row['total']),0,0,'C',0);
+        $pdf->Cell(3, 3,$nombreImpuesto,0,1,'C',0);
+    
     }
 
 $vueltas=$valorIngre-$total;
 
-$pdf->Cell(60,0,'','T');
+$pdf->Cell(65,0,'','T');
 $pdf->Ln(2);   
-$pdf->Cell(30,4,'TOTAL A PAGAR: ',0,0);
-$pdf->Cell(30,4,$total,0,1,'L',0);
-$pdf->Cell(30,4,'RECIBIDO: ',0,0);
-$pdf->Cell(30,4,$valorIngre,0,1,'L',0);
-$pdf->Cell(30,4,'CAMBIO: ',0,0);
-$pdf->Cell(30,4,$vueltas,0,1,'L',0);
+$pdf->SetFont('Arial','B', 6.5);
+$pdf->Cell(25,2,'TOTAL A PAGAR: ',0,0,'R');
+$pdf->Cell(25,2,"$ ".number_format($total),0,1,'L',0);
+$pdf->SetFont('Arial','I', 6.5);
+$pdf->Cell(25,2,'RECIBIDO: ',0,0,'R');
+$pdf->Cell(25,2,"$ ".number_format($valorIngre),0,1,'L',0);
+$pdf->Cell(25,2,'CAMBIO: ',0,0,'R');
+$pdf->Cell(25,2,"$ ".number_format($vueltas),0,1,'L',0);
 }
 
 header('Content-type: application/pdf');

@@ -3,8 +3,8 @@ include 'conexionBD.php';
 
 $id_fact = $_POST['id'];
 $total = 0;
-date_default_timezone_set('Etc/GMT-5');
-$fecha = date('Y-m-d H:i:s');
+
+$fecha = date('Y/m/d H:i:s');
 $tipo_pago = $_POST['tipo_pago'];
 $tipo_domi = $_POST['var2'];
 

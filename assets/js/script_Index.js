@@ -787,15 +787,15 @@ $('#total_venDe').keypress(function (evt) {
 //Capturar el peso de forma actomática cuando se situe el cursos dentro del input
 $("#pesooo").focus(function(e) {
 
-    /*$('#pesooo').val(1);
-    $('#peso').val(1);}*/
-    $.ajax({
+    $('#pesooo').val(1);
+    $('#peso').val(1);
+    /*$.ajax({
         url: "lectura.php",
         success: function(data) {
             $('#pesooo').val(data);
             $('#peso').val(data);
         }
-    });
+    });*/
 });   
 
 

@@ -5,9 +5,9 @@ $id_Sede = $_SESSION['idSede'];
 $id_usuario = $_SESSION['idUser'];
 $dato = $_POST['var'];
 $datos = json_decode(json_encode($dato),true);
-date_default_timezone_set('UTC');
-date_default_timezone_set("America/Bogota");
-$fecha = date('Y-m-d H:i:s');
+/*date_default_timezone_set('UTC');
+date_default_timezone_set("America/Bogota");*/
+$fecha = date('Y/m/d H:i:s');
 $cedula = $_GET['cliente'];
 
 include 'conexionBD.php';
