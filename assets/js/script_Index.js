@@ -26,8 +26,36 @@ $('#seleEli').click(function () {
      
 });
 
+$('#cedula').keydown(function(f){
+    if(f.shiftKey==1){
+        $.ajax({
+            type: "POST",
+            url: "encontrar_cedula.php",
+            data: $('#formulario').serialize(),
+            success: function(data) {
+                
+                $('#resultado').html(data);
+                
+                if (data === "No existe ese registro"){
+                    Swal.fire({
+                        icon: 'error',
+                        text: 'No existen registros con la búsqueda',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    });     
+                    $('#ingresar').prop('disabled', false);
+                }
+            }
+        });
+    }
+});
+
 //Buscar cedula para la existencia del cliente
-$('#buscar1').click(function () {
+/*$('#buscar1').click(function () {
     $.ajax({
         type: "POST",
         url: "encontrar_cedula.php",
@@ -52,7 +80,7 @@ $('#buscar1').click(function () {
         }
     });
      
-});
+});*/
 var cedula_cliente;
 var tipo_cliente=0;
 $('#confi').click(function () {
@@ -148,7 +176,7 @@ $('#registrar2').click(function () {
     var nit = $('#nit').val(); 
     var nit1 = $('#nit1').val(); 
   
-    if(tipo_cle === '' || nombre===''||  documento===''|| telefono===''|| dirección===''|| correo==='' || empresa==='' || nit===''){
+    if(tipo_cle === '' || nombre===''||  documento===''){
         Swal.fire({
             icon: 'error',
             text: 'Por favor ingrese los datos',
@@ -253,46 +281,62 @@ $('.view_products').click(function () {
     var paga = $('#pagaa option:selected').val();
     var tipo = $('#tipoo option:selected').val();
     var tipo2 = $('#tipoo option:selected').text();
+    var refe;
    
-
     if(tipo2==="Efectivo"){
-        refe = 0;
+        refe = $('#valor_ingresado').val();
+
     }else{
-        var refe = $('#ref').val();
+         refe = $('#ref').val();
     }
 
-    $.ajax({
-        url: "modificar_factura.php",
-        type: "POST",
-        data:{var: paga, var2: tipo, var3: refe, var4: id_},
-        success: function(data){
-         
-           if(data==="Modificación de estado de la factura correcta"){
-            Swal.fire({
-                icon: 'success',
-                text: 'Datos erroneos',
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                }
-            });  
-            window.location.href="view_facturas_pendientes.php"; 
-           }else{
-            Swal.fire({
-                icon: 'error',
-                text: 'Ha ocurrido un error',
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                }
-            }); 
-           }
-        }
-    });
+    if(refe === ''){
+        Swal.fire({
+            icon: 'error',
+            text: 'Ingrese dato',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        });
+    }else{
+        $.ajax({
+            url: "modificar_factura.php",
+            type: "POST",
+            data:{var: paga, var2: tipo, var3: refe, var4: id_},
+            success: function(data){
+             
+               if(data==="Modificación de estado de la factura correcta"){
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Datos correctos',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });  
+                window.location.href="view_facturas_pendientes.php"; 
+               }else{
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Ha ocurrido un error',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                }); 
+               }
+            }
+        });
+    }
+
+    
 
 });
 
@@ -473,7 +517,10 @@ $('#domiciliario').click(function(){
 var pago;
 var referencia;
 //Esconder div de método de pago en efectivo
- $('.groupPago').click(function () {
+ $('.groupPago').click(function (e) {
+    $('.groupPago').removeClass("btn-success");
+    $(this).addClass("btn-success");
+    
     pago = $(this).val();
 
     if(tipo_domi === "Presencial"){
@@ -649,15 +696,13 @@ $(document).ready(function(){
                     $('#productos').html(data);        
                 }
             });
-            /*$("#cantidad").prop('disabled', false);
-            $("#pesooo").prop('disabled', false);*/
+           
             $.ajax({
-                
                 url:"ocultar.php?var="+nombre_producto,
-                method:"POST",    
+                method:"POST", 
                 success:function(data){ 
                      tipo = data;   
-                 
+                    alert (tipo);
                      if(tipo==="cantidad"){
                         $('#cantidad').focus();
                         $("#pesooo").val('');
@@ -666,12 +711,13 @@ $(document).ready(function(){
                         $('#pesooo').focus();
                         $("#cantidad").val('');
                         
-                    }        
+                    }      
                 }
             });
             
             return item;    
         }
+
     });
 
     $('#domi').typeahead({
@@ -705,7 +751,35 @@ $(document).ready(function(){
         }
     });
 
+});
 
+$('#producto1').keypress(function (f) {
+    tipo = "";
+    var produ = $('#producto1').val();
+    
+    if(f.which==13){
+        //alert(produ);
+        $("#pesooo").val('');
+        $("#peso").val('');
+        $.ajax({
+            url:"ocultar2.php?var="+produ,
+            method:"POST", 
+            success:function(data){
+                 tipo = data;   
+                 $("#pesooo").val('');
+                 $("#peso").val('');      
+                 if(tipo==="cantidad"){
+                    $('#cantidad').focus();
+                    $("#pesooo").val('');
+                }
+                if(tipo==="peso"){
+                    $('#pesooo').focus();
+                    $("#cantidad").val('');
+                    
+                }      
+            }
+        }); 
+    }
 });
 
 $('.editarDomi').click(function(){
@@ -787,15 +861,15 @@ $('#total_venDe').keypress(function (evt) {
 //Capturar el peso de forma actomática cuando se situe el cursos dentro del input
 $("#pesooo").focus(function(e) {
 
-    $('#pesooo').val(1);
-    $('#peso').val(1);
-    /*$.ajax({
+    /*$('#pesooo').val(1);
+    $('#peso').val(1);*/
+    $.ajax({
         url: "lectura.php",
         success: function(data) {
             $('#pesooo').val(data);
             $('#peso').val(data);
         }
-    });*/
+    });
 });   
 
 
@@ -861,7 +935,7 @@ $('.selec').keypress(function (e) {
                     $('#cantidad').focus();
                 }else{
                     $('#cantidad').val('');
-                    $('#pesooo').focus();
+                    //$('#pesooo').focus();
                 }
                 
                 if(peso === ''){
@@ -1023,8 +1097,9 @@ $('.selec').keypress(function (e) {
                     
                 });
                 venta = datos;
-                $('#pesooo').val('');
+                $('#pesooo').val('')
                 $('#peso').val('');
+                $('#producto').focus();
                
             }       
         }//IF DE VALIDAR DATOS VACIOS
@@ -1094,7 +1169,7 @@ $('#pagar').click(function(){
                         });     
                     }else{
                         document.getElementById("submitButton1").click();
-                        var myVar = setInterval(myTimer, 2000);
+                        var myVar = setInterval(myTimer, 2500);
                     }
                 }
             });

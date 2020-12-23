@@ -207,7 +207,7 @@
                                                     <th>Opciones</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="pro3">
+                                            <tbody style="font-size:93%;" id="pro3">
                                             <?php
                                                 include 'ver_fact3.php';
                                             ?>

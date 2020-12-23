@@ -14,7 +14,25 @@ session_start();
     $nit = $_POST['nit'];
     $nit1 = $_POST['nit1'];
 
-    //require 'conexionGene.php';
+    if(empty($empresa)){
+        $empresa = '-';
+    }
+    if(empty($direccion)){
+        $direccion = '-';
+    }
+    if(empty($correo)){
+        $correo = '-';
+    }
+    //---------------------------------
+    if(empty($telefono)){
+        $telefono = 0;
+    }
+    if(empty($nit)){
+        $nit = 0;
+    }
+    if(empty($nit1)){
+        $nit1 = 0;
+    }
 
 
     //echo "El nombre es: " .$nombre. ", el documento es: " .$documento;

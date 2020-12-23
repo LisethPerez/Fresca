@@ -205,7 +205,7 @@
                                                     <th>Opciones</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="pro">
+                                            <tbody style="font-size:93%;" id="pro">
                                             <?php
                                                 include 'ver_fact.php';
                                             ?>

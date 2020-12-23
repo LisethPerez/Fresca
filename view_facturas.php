@@ -180,7 +180,7 @@
                                                     <th>Opciones</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="pro2">
+                                            <tbody style="font-size:93%;"  id="pro2">
                                             <?php
                                                 include 'ver_fact2.php';
                                             ?>

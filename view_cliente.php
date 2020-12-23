@@ -200,7 +200,7 @@
                                                     <th>Editar</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="conte_tabla">
+                                            <tbody style="font-size:93%; "id="conte_tabla">
                                             <?php 
                                                     include 'conexionBD.php';
                                                     $consulta = "SELECT * from cliente";
@@ -215,7 +215,7 @@
                                                         <td><?php echo $row->telefono;?></td>
                                                         <td><?php echo $row->correo;?></td>
                                                         <td><?php echo $row->documento;?></td>
-                                                        <td><?php echo $row->verificacion_nit;?></td>
+                                                        <td><?php echo $row->nit;?></td>
                                                         <td><?php echo $row->fecha;?></td>
                                                         <td> 
                                                             <button class="btn btn-white btn-sm editbtn" style="background:#F0A744; color:#FFF" id="obtener" data-toggle="modal" data-target="#actualizar_cliente">

@@ -51,6 +51,10 @@ display: block;
   font-size: 80%;
 
 }
+
+.groupPago:active { 
+  padding: 5px; 
+} 
 </style>
 </head>
 <body>
@@ -216,7 +220,7 @@ display: block;
                                                         <th></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="cont_ventas">
+                                                <tbody style="font-size:80%;" id="cont_ventas">
 
                                                 </tbody>
                                             </table>
@@ -242,20 +246,6 @@ display: block;
                                                 </div>
                                             </div>
                                             
-                                            
-                                            <hr>
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <button class="btn btn-primary btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#infoCliente" style="width:130px; height:50px"><i class="fa fa-user"></i>&nbsp;Cliente</button>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="btn btn-success btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#infoPago" style="width:130px; height:50px"><i class="fa fa-shopping-cart"></i>&nbsp;Registrar pago</button> 
-                                                </div>
-                                                <div class="col">
-                                                    <button class="btn btn-white btn-sm mb-2" type="button"  id="prueba" data-toggle="modal" data-target="#descuentoStock" style="background:#F0A744; color:#FFF; width:130px; height:50px" disabled><i class="fa fa-globe"></i>&nbsp;Pagos WEB</button> 
-                                                </div>
-                                                
-                                            </div><hr>
                                             <div class="modal fade" id="infoCliente" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true" >
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content">
@@ -686,6 +676,24 @@ display: block;
                                                                 </tr>
                                                             </tbody>
                                         </table>
+                                    </div>
+                                </div>
+                                <div class="card border border-secondary">
+                                   
+                                    <div class="card-body">
+                                        <div class="form-row">
+                                            
+                                                <button class="btn btn-primary btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#infoCliente" style="width:309px; height:50px"><i class="fa fa-user"></i>&nbsp;Cliente</button>
+                                            
+                                        </div>
+                                    <div class="form-row">
+                                        <div class="col"></div>
+                                        <div class="col">
+                                            <button class="btn btn-success btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#infoPago" style=" height:50px"><i class="fa fa-shopping-cart"></i>&nbsp;Realizar pago</button> 
+                                        </div>
+                                        <div class="col">
+                                            <button class="btn btn-white btn-sm mb-2" type="button"  id="prueba" data-toggle="modal" data-target="#descuentoStock" style="background:#F0A744; color:#FFF; height:50px" disabled><i class="fa fa-globe"></i>&nbsp;Pagos Web</button> 
+                                        </div>
                                     </div>
                                 </div>
                             </div> <!--COL-LOg-4-->
