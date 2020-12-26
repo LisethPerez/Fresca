@@ -88,9 +88,9 @@ $pdf->Ln(0);
 $consult = "SELECT * FROM detalle_factura WHERE factura_id_factura={$idFac}";
 $sqlDeta = mysqli_query($conn,$consult) or die(mysqli_error($conn));
 
-$valor0 = 0; $baseIva0 = 0; $iva0=0;
-$valor5 = 0; $baseIva5 = 0; $iva5=0;
-$valor19 = 0; $baseIva19 = 0; $iva19=0;
+$valor0 = 0; $baseIva0 = 0; $iva0=0; $valor_0 = 0; $baseIva_0 = 0; $iva_0=0;
+$valor5 = 0; $baseIva5 = 0; $iva5=0; $valor_5 = 0; $baseIva_5 = 0; $iva_5=0; 
+$valor19 = 0; $baseIva19 = 0; $iva19=0; $valor_19 = 0; $baseIva_19 = 0; $iva_19=0;
 
 if($num = $sqlDeta->num_rows>0){
 
@@ -128,22 +128,27 @@ require 'conexionGene.php';
         $pdf->Cell(5, 5,$nombreImpuesto,0,1,'C',0);
 
         
-        if($nombreImpuesto==0){      
-            $iva0 = ($precio * $porcentaje) + $iva0;
-            $baseIva0 = ($precio * $cantidad)  + $baseIva0;
-            $valor0 = round($iva0 + $baseIva0 + $valor0);
+        if($nombreImpuesto==0){    
+            $iva_0 = ($precio * $porcentaje * $cantidad);
+            $baseIva_0 = ($precio * $cantidad);
+            $valor_0 =  ($baseIva_0 + $iva_0);
         }
         if($nombreImpuesto==5){
-            $iva5 = ($precio * $porcentaje * $cantidad) + $iva5;
-            $baseIva5 = ($precio * $cantidad)  + $baseIva5;
-            $valor5 = round($iva5 + $baseIva5 + $valor5);
+            $iva_5 = ($precio * $porcentaje * $cantidad);
+            $baseIva_5 = ($precio * $cantidad);
+            $valor_5 =  ($baseIva_5 + $iva_5);
 
         }
         if($nombreImpuesto==19){
-            $valor19 = $total2 + $valor19;
-            $baseIva19 = $precio + $baseIva19;
-            $iva19 = ($precio * $porcentaje) + $iva19;
+            $iva_19 = ($precio * $porcentaje * $cantidad);
+            $baseIva_19 = ($precio * $cantidad);
+            $valor_19 =  ($baseIva_19 + $iva_19);
+           
         }
+
+        $iva0 = $iva_0 + $iva0; $baseIva0 = $baseIva_0 + $baseIva0; $valor0 = $valor_0 + $valor0;
+        $iva5 = $iva_5 + $iva5; $baseIva5 = $baseIva_5 + $baseIva5; $valor5 = $valor_5 + $valor5;
+        $iva19 = $iva_19 + $iva19; $baseIva19 = $baseIva_19 + $baseIva19; $valor19 = $valor_19 + $valor19;
     
     }
 

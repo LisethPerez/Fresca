@@ -683,17 +683,18 @@ display: block;
                                     <div class="card-body">
                                         <div class="form-row">
                                             
-                                                <button class="btn btn-primary btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#infoCliente" style="width:309px; height:50px"><i class="fa fa-user"></i>&nbsp;Cliente</button>
+                                                <button class="btn btn-primary btn-sm mb-2" id="" type="button" data-toggle="modal" data-target="#infoCliente" style="width:310px; height:50px"><i class="fa fa-user"></i>&nbsp;Cliente</button>
                                             
                                         </div>
                                     <div class="form-row">
-                                        <div class="col"></div>
+                                       
                                         <div class="col">
-                                            <button class="btn btn-success btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#infoPago" style=" height:50px"><i class="fa fa-shopping-cart"></i>&nbsp;Realizar pago</button> 
+                                            <button class="btn btn-success btn-sm mb-2" id="realizar_pago" type="button" data-toggle="modal" data-target="#infoPago" style="width:145px; height:50px"><i class="fa fa-shopping-cart"></i>&nbsp;Realizar pago</button> 
                                         </div>
                                         <div class="col">
-                                            <button class="btn btn-white btn-sm mb-2" type="button"  id="prueba" data-toggle="modal" data-target="#descuentoStock" style="background:#F0A744; color:#FFF; height:50px" disabled><i class="fa fa-globe"></i>&nbsp;Pagos Web</button> 
+                                            <button class="btn btn-white btn-sm mb-2" type="button"  id="prueba" data-toggle="modal" data-target="#descuentoStock" style="width:142px; background:#F0A744; color:#FFF; height:50px" disabled><i class="fa fa-globe"></i>&nbsp;Pagos Web</button> 
                                         </div>
+                                       
                                     </div>
                                 </div>
                             </div> <!--COL-LOg-4-->
